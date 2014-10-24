@@ -19,7 +19,6 @@ void ofApp::setup()
     _currentFile = 1;
     _path = "~/Dropbox/PhD/Debora - Toni Shared/Paper ACCV/Code/ResultExperiments/Toni_27_09_2014/Interpolacions";
     
-    
     ofDirectory dir(_path);
     dir.allowExt("obj");
     dir.listDir();
@@ -47,11 +46,11 @@ void ofApp::setup()
     _texture.loadImage(_texturesList[_currentFile]);
     
     // Camera
-    float viewAngle = 60.0;
+    float viewAngle = 30.0;
     double distance = (diagonal/2.0)/sin((viewAngle*(pi/180)/2.0));
     testCam.setupPerspective(true, viewAngle, 1, distance*1.5, ofVec2f(0.0));
     testCam.setPosition(bbox.minX+(bbox.maxX-bbox.minX)/2.0,bbox.minY+(bbox.maxY-bbox.minY)/2.0,distance);
-    testCam.lookAt(ofVec3f(bbox.minX+(bbox.maxX-bbox.minX)/2.0,bbox.minY+(bbox.maxY-bbox.minY)/2.0,0.0), ofVec3f(0.0,1.0,0.0));
+    testCam.lookAt(ofVec3f(bbox.minX+(bbox.maxX-bbox.minX)/2.0,bbox.minY+(bbox.maxY-bbox.minY)/2.0,0.0), ofVec3f(0.0,-1.0,0.0));
 }
 
 //--------------------------------------------------------------
