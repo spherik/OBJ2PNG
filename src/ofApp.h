@@ -3,6 +3,14 @@
 #include "ofMain.h"
 #include "ofxAssimpModelLoader.h"
 
+typedef struct
+{
+    float minX;
+    float minY;
+    float maxX;
+    float maxY;
+}BBox;
+
 class ofApp : public ofBaseApp{
 
 	public:
@@ -32,5 +40,7 @@ private:
     ofImage _texture;
     int _done;
     
-    void setup1();
+    BBox bbox;
+    ofCamera testCam;
+
 };

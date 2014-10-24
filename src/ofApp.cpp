@@ -3,6 +3,11 @@
 
 void ofApp::setup()
 {
+    bbox.maxX = std::numeric_limits<float>::min();
+    bbox.maxY = std::numeric_limits<float>::min();
+    bbox.minX = std::numeric_limits<float>::max();
+    bbox.minY = std::numeric_limits<float>::max();
+    
     string new_path;
     _done = 1;
     
@@ -11,8 +16,8 @@ void ofApp::setup()
     _fbo.allocate(ofGetWidth(), ofGetHeight());
     _pixels.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR);
     
-    _currentFile = 10;
-    _path = "/Users/spherik/Dropbox/PhD/Debora - Toni Shared/Paper ACCV/Code/ResultExperiments/Toni_27_09_2014/Interpolacions";
+    _currentFile = 2;
+    _path = "~/Dropbox/PhD/Debora - Toni Shared/Paper ACCV/Code/ResultExperiments/Toni_27_09_2014/Interpolacions";
     
     
     ofDirectory dir(_path);
@@ -29,12 +34,24 @@ void ofApp::setup()
     }
     
     _loader.loadModel(_filesList[_currentFile]);
+    
+    for(int i =0; i < _loader.getMesh(0).getVertices().size(); i++)
+    {
+        bbox.maxX = max(bbox.maxX, _loader.getMesh(0).getVertices()[i][0]);
+        bbox.maxY = max(bbox.maxY, _loader.getMesh(0).getVertices()[i][1]);
+        bbox.minX = min(bbox.minX, _loader.getMesh(0).getVertices()[i][0]);
+        bbox.minY = min(bbox.minY, _loader.getMesh(0).getVertices()[i][1]);
+    }
+    float diagonal = sqrt((bbox.maxX-bbox.minX)*(bbox.maxX-bbox.minX)+(bbox.maxY-bbox.minY)*(bbox.maxY-bbox.minY));
+    
+    
     cout << "Min: " << _loader.getSceneMin() << endl;
     cout << "Max: " << _loader.getSceneMax() << endl;
     cout << "Center: " << _loader.getSceneCenter() << endl;
+    cout << "BBox:" << endl << "* Min: " << bbox.minX << ", " << bbox.minY << endl << "* Max: " << bbox.maxX << ", " << bbox.maxY << endl << "* Center: " << bbox.minX+(bbox.maxX-bbox.minX)/2.0 << ", " << bbox.minY+(bbox.maxY-bbox.minY)/2.0 << endl;
     _texture.loadImage(_textures[_currentFile]);
     
-    
+    vector<ofVec2f> texCoord;
     _mesh.addVertex(_loader.getSceneMin(false));
     _mesh.addVertex(ofVec3f(_loader.getSceneMin(false)[0], _loader.getSceneMax(false)[1], 0.0));
     _mesh.addVertex(ofVec3f(_loader.getSceneMax(false)[0], _loader.getSceneMax(false)[1], 0.0));
@@ -42,9 +59,23 @@ void ofApp::setup()
     _mesh.addTriangle(0, 1, 2);
     _mesh.addTriangle(0, 2, 3);
     
+    texCoord.push_back(ofVec2f(0.0,0.0));
+    texCoord.push_back(ofVec2f(0.0,1.0));
+    texCoord.push_back(ofVec2f(1.0,1.0));
+    texCoord.push_back(ofVec2f(1.0,0.0));
+    _mesh.addTexCoords(texCoord);
+    
     
     cout << _mesh.getCentroid() << endl;
     
+    // Camera
+    float viewAngle = 60.0;
+    double distance = (diagonal/2.0)/sin((viewAngle*(pi/180)/2.0));
+    std::cout << "Diagonal: " << diagonal << ". Distance: " << distance << endl;
+    testCam.setupPerspective(true, viewAngle, 1, distance*1.5, ofVec2f(0.0));
+    testCam.setPosition(bbox.minX+(bbox.maxX-bbox.minX)/2.0,bbox.minY+(bbox.maxY-bbox.minY)/2.0,distance);
+    testCam.lookAt(ofVec3f(bbox.minX+(bbox.maxX-bbox.minX)/2.0,bbox.minY+(bbox.maxY-bbox.minY)/2.0,0.0), ofVec3f(0.0,1.0,0.0));
+    cout << "MVP: " << testCam.getModelViewProjectionMatrix() << endl << "------------------------" << endl;
 }
 
 //--------------------------------------------------------------
@@ -54,20 +85,24 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-    ofBackground( 0.0,0.0,0.0 );
-    //cout << ofGetCurrentMatrix(OF_MATRIX_MODELVIEW) << endl << "-------------------------" << endl;
-    ofPushMatrix();						//Store the coordinate system
+    //ofTrueTypeFont ttf;
+    //ttf.loadFont("verdana.ttf", 32, true, true, true);
+    ofSetColor(255);
+    ofDrawBitmapString("FPS: "+ ofToString((int) ofGetFrameRate()), 10, 20);
     
-    //Move coordinate center to screen's center
-    ofTranslate( ofGetWidth()/2, ofGetHeight()/2, 0 );
-    //ofTranslate(_loader.getSceneMin()[0], _loader.getSceneMin()[1], 0.0);
-    _mesh.drawWireframe();
+    
+    testCam.begin(ofGetCurrentViewport());
+    
+    ofBackground( 0.0,0.0,0.0 );
+    _texture.bind();
+    _mesh.draw();
+    _texture.unbind();
     
     _texture.bind();
-    //_loader.drawFaces();
+    _loader.drawFaces();
     _texture.unbind();
-    ofSpherePrimitive(10, 20);
-    ofPopMatrix();						//Restore the coordinate system
+    
+    testCam.end();
 }
 
 //--------------------------------------------------------------
