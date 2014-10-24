@@ -33,9 +33,8 @@ private:
     ofFbo _fbo;
     ofPixels _pixels;
     string _path;
-    ofMesh _mesh;
     ofxAssimpModelLoader _loader;
-    vector<string> _filesList, _textures;
+    vector<string> _filesList, _texturesList;
     int _currentFile;
     ofImage _texture;
     int _done;
