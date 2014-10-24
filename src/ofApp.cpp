@@ -45,10 +45,10 @@ void ofApp::setup()
     float diagonal = sqrt((bbox.maxX-bbox.minX)*(bbox.maxX-bbox.minX)+(bbox.maxY-bbox.minY)*(bbox.maxY-bbox.minY));
     
     
-    cout << "Min: " << _loader.getSceneMin() << endl;
+    /*cout << "Min: " << _loader.getSceneMin() << endl;
     cout << "Max: " << _loader.getSceneMax() << endl;
     cout << "Center: " << _loader.getSceneCenter() << endl;
-    cout << "BBox:" << endl << "* Min: " << bbox.minX << ", " << bbox.minY << endl << "* Max: " << bbox.maxX << ", " << bbox.maxY << endl << "* Center: " << bbox.minX+(bbox.maxX-bbox.minX)/2.0 << ", " << bbox.minY+(bbox.maxY-bbox.minY)/2.0 << endl;
+    cout << "BBox:" << endl << "* Min: " << bbox.minX << ", " << bbox.minY << endl << "* Max: " << bbox.maxX << ", " << bbox.maxY << endl << "* Center: " << bbox.minX+(bbox.maxX-bbox.minX)/2.0 << ", " << bbox.minY+(bbox.maxY-bbox.minY)/2.0 << endl;*/
     _texture.loadImage(_textures[_currentFile]);
     
     vector<ofVec2f> texCoord;
@@ -71,11 +71,11 @@ void ofApp::setup()
     // Camera
     float viewAngle = 60.0;
     double distance = (diagonal/2.0)/sin((viewAngle*(pi/180)/2.0));
-    std::cout << "Diagonal: " << diagonal << ". Distance: " << distance << endl;
+    //std::cout << "Diagonal: " << diagonal << ". Distance: " << distance << endl;
     testCam.setupPerspective(true, viewAngle, 1, distance*1.5, ofVec2f(0.0));
     testCam.setPosition(bbox.minX+(bbox.maxX-bbox.minX)/2.0,bbox.minY+(bbox.maxY-bbox.minY)/2.0,distance);
     testCam.lookAt(ofVec3f(bbox.minX+(bbox.maxX-bbox.minX)/2.0,bbox.minY+(bbox.maxY-bbox.minY)/2.0,0.0), ofVec3f(0.0,1.0,0.0));
-    cout << "MVP: " << testCam.getModelViewProjectionMatrix() << endl << "------------------------" << endl;
+    //cout << "MVP: " << testCam.getModelViewMatrix() << endl << "------------------------" << endl;
 }
 
 //--------------------------------------------------------------
@@ -99,7 +99,8 @@ void ofApp::draw(){
     _texture.unbind();
     
     _texture.bind();
-    _loader.drawFaces();
+    //_loader.drawFaces();
+    _loader.getMesh(0).drawFaces();
     _texture.unbind();
     
     testCam.end();
