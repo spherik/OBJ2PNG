@@ -1,3 +1,4 @@
 ofx3DModelLoader
 ofxAssimpModelLoader
 ofxThreadedImageLoader
+ofxArgParser
