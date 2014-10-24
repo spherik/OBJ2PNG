@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8B58FFC4-9A28-4B58-AF2D-C584633D37F3</string>
+	<key>IDESourceControlProjectName</key>
+	<string>OBJ2PNG</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>DFD05680EF7CA2627290D14F8593FA0A085C1B3B</key>
+		<string>https://github.com/spherik/OBJ2PNG.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>OBJ2PNG.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>DFD05680EF7CA2627290D14F8593FA0A085C1B3B</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/spherik/OBJ2PNG.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>DFD05680EF7CA2627290D14F8593FA0A085C1B3B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DFD05680EF7CA2627290D14F8593FA0A085C1B3B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OBJ2PNG</string>
+		</dict>
+	</array>
+</dict>
+</plist>
